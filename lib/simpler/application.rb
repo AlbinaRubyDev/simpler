@@ -32,7 +32,7 @@ module Simpler
         controller = route.controller.new(env)
         action = route.action
       rescue Exception => e
-        controller = EmptyController.new(env)
+        controller = ExceptionsController.new(env)
         action = "not_found"
       end
 
