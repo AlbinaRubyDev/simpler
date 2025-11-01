@@ -18,7 +18,7 @@ module Simpler
 
       set_default_headers
       send(action)
-      write_response
+      write_response unless action == "not_found"
 
       @response.finish
     end

@@ -34,7 +34,7 @@ class AppLogger
   end
 
   def response_line(status, headers, env)
-    "Response: #{status} [#{headers['Content-Type']}] #{env['simpler.controller'].name}/#{env['simpler.action']}.html.erb"
+    "Response: #{status} [#{headers['Content-Type']}] #{env['simpler.controller']&.name}/#{env['simpler.action']}.html.erb"
   end
 
 end
