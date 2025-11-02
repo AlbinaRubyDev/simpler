@@ -30,6 +30,7 @@ module Simpler
       action = route_point[1]
       route = Route.new(method, path, controller, action)
 
+      binding.irb
       @routes.push(route)
     end
 

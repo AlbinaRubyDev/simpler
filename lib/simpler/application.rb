@@ -28,6 +28,7 @@ module Simpler
 
     def call(env)
       begin
+        #binding.irb
         route = @router.route_for(env)
         controller = route.controller.new(env)
         action = route.action
