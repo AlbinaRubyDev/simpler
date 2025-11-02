@@ -9,4 +9,9 @@ class TestsController < Simpler::Controller
     status 201
   end
 
+  def show
+    @id = params["id"]
+    status 200
+  end
+
 end

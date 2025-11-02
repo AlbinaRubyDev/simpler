@@ -28,9 +28,9 @@ module Simpler
 
     def call(env)
       begin
-        #binding.irb
         route = @router.route_for(env)
-        controller = route.controller.new(env)
+        route_params = route.params_for(env['PATH_INFO'])
+        controller = route.controller.new(env, route_params)
         action = route.action
       rescue Exception => e
         controller = ExceptionsController.new(env)

@@ -13,14 +13,17 @@ module Simpler
       end
 
       def match?(method, path)
-        #@method == method && path.match(@path)
-        return false unless @method == method
-        !!(@regex.match(path))
-        #binding.irb
+        @method == method && @regex.match(path)
       end
 
+      def params_for(path)
+        @regex.match(path)&.named_captures || {}
+      end
+
+      private
+
       def build_regex(path)
-        pattern = path.gsub('^\/tests\/(?<id>[0-9]+)$')
+        pattern = path.gsub(/:\w+/, '(?<id>[0-9]+)')
         Regexp.new("^#{pattern}$")
       end
     end
