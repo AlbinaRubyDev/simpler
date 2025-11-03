@@ -43,8 +43,9 @@ module Simpler
     end
 
     def write_response
-      body = render_body
+      return unless @response.body.empty?
 
+      body = render_body
       @response.write(body)
     end
 
@@ -57,7 +58,11 @@ module Simpler
     end
 
     def render(template)
-      @request.env['simpler.template'] = template
+      if template.is_a?(Hash) && template[:plain]
+        @response.write(template[:plain])
+      else
+        @request.env['simpler.template'] = template
+      end
     end
 
   end
