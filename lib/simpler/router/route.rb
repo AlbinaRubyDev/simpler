@@ -9,12 +9,23 @@ module Simpler
         @path = path
         @controller = controller
         @action = action
+        @regex = build_regex(path)
       end
 
       def match?(method, path)
-        @method == method && path.match(@path)
+        @method == method && @regex.match(path)
       end
 
+      def params_for(path)
+        @regex.match(path)&.named_captures || {}
+      end
+
+      private
+
+      def build_regex(path)
+        pattern = path.gsub(/:\w+/, '(?<id>[0-9]+)')
+        Regexp.new("^#{pattern}$")
+      end
     end
   end
 end

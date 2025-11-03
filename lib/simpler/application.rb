@@ -27,9 +27,15 @@ module Simpler
     end
 
     def call(env)
-      route = @router.route_for(env)
-      controller = route.controller.new(env)
-      action = route.action
+      begin
+        route = @router.route_for(env)
+        route_params = route.params_for(env['PATH_INFO'])
+        controller = route.controller.new(env, route_params)
+        action = route.action
+      rescue Exception => e
+        controller = ExceptionsController.new(env)
+        action = "not_found"
+      end
 
       make_response(controller, action)
     end
